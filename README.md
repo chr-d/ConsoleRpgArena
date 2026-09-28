@@ -25,3 +25,48 @@ dotnet run
   - `4` — Quit the game.
 - Targets are chosen by number. Press `0` to cancel target selection.
 - Enemies attack a random living member of your party automatically.
+
+## UML class diagram
+
+```mermaid
+classDiagram
+    class Character {
+        <<abstract>>
+        +string Name
+        +int Health
+        +int MaxHealth
+        +bool IsAlive
+        +TakeDamage(amount int) void
+        +RestoreHealth(amount int) void
+        +Attack(target Character, random Random) void
+    }
+    class IHealer {
+        <<interface>>
+        +Heal(target Character) void
+    }
+    class Warrior{
+        -int MinDamage
+        -int MaxDamage
+        +Attack(target Character, random Random) void
+    }
+    class Mage{
+        -int MinDamage
+        -int MaxDamage
+        -double MissChance
+        -int MinHeal
+        -int MaxHeal
+        +Attack(target Character, random Random) void
+        +Heal(Character target) void
+    }
+    class Rogue{
+        -int MinDamage
+        -int MaxDamage
+        -int Strikes
+        +Attack(target Character, random Random) void
+    }
+
+    Character <|-- Warrior
+    Character <|-- Mage
+    Character <|-- Rogue
+    IHealer <|.. Mage
+```
